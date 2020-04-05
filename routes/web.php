@@ -22,6 +22,7 @@ Route::group(['prefix' => 'admin'], function () {
     /**
      * Phần group
      */
+    
     Route::group(['prefix' => 'group'], function () {
 
     });
