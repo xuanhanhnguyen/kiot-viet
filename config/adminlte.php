@@ -247,17 +247,17 @@ return [
         [
             'text'    => 'Quản lý sản phẩm',
             'url'  => 'admin/product',
-            'icon'    => 'fa fa-shopping-cart',            
+            'icon'    => 'fab fa-product-hunt',            
         ],
         [
             'text'    => 'Quản lý khách hàng',
             'url'  => 'admin/customer',
-            'icon'    => 'fa fa-shopping-cart',            
+            'icon'    => 'fa fa-child',            
         ],
         [
             'text'    => 'Quản lý nhà cung cấp',
             'url'  => 'admin/supplier',
-            'icon'    => 'fa fa-shopping-cart',            
+            'icon'    => 'fa fa-diagnoses',            
         ],
         [
             'text'    => 'Đối tác',
