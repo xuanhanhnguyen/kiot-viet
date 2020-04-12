@@ -20,10 +20,6 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     /**
-     * Phần group
-     */
-
-     /**
      * Sản phẩm
      */
     Route::prefix('product')->group(function () {
@@ -35,7 +31,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', 'ProductController@delete')->name('admin.product.delete');
     });
 
-     /**
+    /**
      * Khách hàng
      */
 
@@ -48,7 +44,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', 'CustomerController@delete')->name('admin.customer.delete');
     });
 
-     /**
+    /**
      * Nhà cung cấp
      */
 
@@ -60,7 +56,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('edit/{id}', 'SupplierController@edit')->name('admin.supplier.edit');
         Route::get('delete/{id}', 'SupplierController@delete')->name('admin.supplier.delete');
     });
-    Route::group(['prefix' => 'group'], function () {
 
+    /**
+     * Phần giao dịch
+     */
+
+    Route::group(['prefix' => 'giao_dich'], function () {
+        Route::get('/', 'Admin\GiaoDichController@index')->name('giao_dich.index');
+        Route::get('/them', 'Admin\GiaoDichController@create')->name('giao_dich.create');
+        Route::post('/', 'Admin\GiaoDichController@store')->name('giao_dich.store');
+        Route::get('/{id}', 'Admin\GiaoDichController@show')->name('giao_dich.show');
     });
 });

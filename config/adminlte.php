@@ -214,60 +214,73 @@ return [
             'topnav' => true,
         ],
         [
-            'text'        => 'Tổng quan',
-            'url'         => 'admin/',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'text' => 'Tổng quan',
+            'url' => 'admin/',
+            'icon' => 'far fa-fw fa-file',
+            'label' => 4,
             'label_color' => 'success',
         ],
         ['header' => 'Thiết lập'],
         [
             'text' => 'Tài khoản',
-            'url'  => 'admin/',
+            'url' => 'admin/',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'Quản lý'],
         [
-            'text' => 'Hàng hóa',
-            'url'  => 'admin/',
-            'icon' => 'nav-icon fas fa-th',
-        ],
-        [
-            'text'    => 'Giao dịch',
-            'url'  => 'admin/',
-            'icon'    => 'fa fa-shopping-cart',
+            'text' => 'Giao dịch',
+            'icon' => 'fa fa-shopping-cart',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Thêm hóa đơn',
+                    'url' => 'admin/giao_dich/them',
+                    'icon_color' => 'red'
+                ],
+                [
+                    'text' => 'Danh sách hóa đơn',
+                    'url' => 'admin/giao_dich',
                     'icon_color' => 'red'
                 ]
             ],
         ],
         [
-            'text'    => 'Quản lý sản phẩm',
-            'url'  => 'admin/product',
-            'icon'    => 'fab fa-product-hunt',            
+            'text' => 'Quản lý sản phẩm',
+            'url' => 'admin/product',
+            'icon' => 'fab fa-product-hunt',
         ],
         [
-            'text'    => 'Quản lý khách hàng',
-            'url'  => 'admin/customer',
-            'icon'    => 'fa fa-child',            
+            'text' => 'Đối tác',
+            'url' => 'admin/',
+            'icon' => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Quản lý khách hàng',
+                    'url' => 'admin/customer',
+                    'icon' => 'fa fa-child',
+                ],
+                [
+                    'text' => 'Quản lý nhà cung cấp',
+                    'url' => 'admin/supplier',
+                    'icon' => 'fa fa-diagnoses',
+                ]
+            ]
         ],
         [
-            'text'    => 'Quản lý nhà cung cấp',
-            'url'  => 'admin/supplier',
-            'icon'    => 'fa fa-diagnoses',            
-        ],
-        [
-            'text'    => 'Đối tác',
-            'url'  => 'admin/',
-            'icon'    => 'fas fa-users',
-        ],
-        [
-            'text'    => 'Nhân viên',
-            'url'  => 'admin/',
-            'icon'    => 'fas fa-users-cog'
+            'text' => 'Nhân viên',
+            'url' => 'admin/',
+            'icon' => 'fas fa-users-cog',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách nhân viên',
+                    'url' => 'admin/',
+                    'icon_color' => 'red'
+                ],
+                [
+                    'text' => 'Chấm công',
+                    'url' => 'admin/',
+                    'icon_color' => 'red'
+                ]
+            ]
         ]
     ],
 

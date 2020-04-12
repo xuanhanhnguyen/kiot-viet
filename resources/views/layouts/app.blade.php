@@ -3,6 +3,7 @@
 @yield('main')
 
 @section('css')
+    <link rel="stylesheet" href="/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="/css/admin.css">
 @stop
 

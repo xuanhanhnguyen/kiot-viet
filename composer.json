@@ -35,6 +35,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "App/Function/Functions.php"
+        ],
         "psr-4": {
             "App\\": "app/"
         },
