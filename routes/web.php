@@ -19,10 +19,14 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'HomeController@index')->name('home');
-    /**
-     * Phần group
-     */
-    Route::group(['prefix' => 'group'], function () {
 
+    Route::group(['prefix' => 'giao_dich'], function () {
+        /**
+         * Phần giao dịch
+         */
+        Route::get('/', 'Admin\GiaoDichController@index')->name('giao_dich.index');
+        Route::get('/them', 'Admin\GiaoDichController@create')->name('giao_dich.create');
+        Route::post('/', 'Admin\GiaoDichController@store')->name('giao_dich.store');
+        Route::get('/{id}', 'Admin\GiaoDichController@show')->name('giao_dich.show');
     });
 });

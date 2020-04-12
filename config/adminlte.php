@@ -234,12 +234,16 @@ return [
         ],
         [
             'text'    => 'Giao dịch',
-            'url'  => 'admin/',
             'icon'    => 'fa fa-shopping-cart',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text' => 'Thêm hóa đơn',
+                    'url'  => 'admin/giao_dich/them',
+                    'icon_color' => 'red'
+                ],
+                [
+                    'text' => 'Danh sách hóa đơn',
+                    'url'  => 'admin/giao_dich',
                     'icon_color' => 'red'
                 ]
             ],
