@@ -245,6 +245,21 @@ return [
             ],
         ],
         [
+            'text'    => 'Quản lý sản phẩm',
+            'url'  => 'admin/product',
+            'icon'    => 'fa fa-shopping-cart',            
+        ],
+        [
+            'text'    => 'Quản lý khách hàng',
+            'url'  => 'admin/customer',
+            'icon'    => 'fa fa-shopping-cart',            
+        ],
+        [
+            'text'    => 'Quản lý nhà cung cấp',
+            'url'  => 'admin/supplier',
+            'icon'    => 'fa fa-shopping-cart',            
+        ],
+        [
             'text'    => 'Đối tác',
             'url'  => 'admin/',
             'icon'    => 'fas fa-users',
