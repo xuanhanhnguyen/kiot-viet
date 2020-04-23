@@ -34,7 +34,7 @@
             </select>  
         </div>
         <div class="form-group">
-            <label for="exampleInputPassword1">Số lượng:</label>
+            <label for="exampleInputPassword1">Sản phẩm:</label>
             <select class="form-control" name="san_pham_id" >
             @foreach($sanpham as $key=>$san)
                 <option value="{{$san->id}}">[{{$san->id}}]{{$san->ten_sp}}</option>
