@@ -249,6 +249,11 @@ return [
             'icon' => 'fab fa-product-hunt',
         ],
         [
+            'text' => 'Quản lý nhập kho',
+            'url' => 'admin/nhapkho',
+            'icon' => 'fab fa-product-hunt',
+        ],
+        [
             'text' => 'Đối tác',
             'url' => 'admin/',
             'icon' => 'fas fa-users',
