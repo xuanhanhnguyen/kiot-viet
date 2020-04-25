@@ -31,6 +31,17 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', 'ProductController@delete')->name('admin.product.delete');
     });
 
+     /**
+     * Nhập kho
+     */
+    Route::prefix('nhapkho')->group(function () {
+        Route::get('/', 'NhapKhoController@index')->name('admin.kho.index');
+        Route::get('goadd', 'NhapKhoController@goadd')->name('admin.kho.goadd');
+        Route::post('add', 'NhapKhoController@add')->name('admin.kho.add');
+        Route::get('goedit/{id}', 'NhapKhoController@goedit')->name('admin.kho.goedit');
+        Route::post('edit/{id}', 'NhapKhoController@edit')->name('admin.kho.edit');
+        Route::get('delete/{id}', 'NhapKhoController@delete')->name('admin.kho.delete');
+    });
     /**
      * Khách hàng
      */
