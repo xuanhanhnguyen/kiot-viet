@@ -20,4 +20,9 @@ class hoa_don extends Model
     {
         return $this->hasOne('App\User', 'id', 'create_by');
     }
+
+    public function cthd()
+    {
+        return $this->hasMany('App\cthd', 'hoa_don_id', 'id');
+    }
 }

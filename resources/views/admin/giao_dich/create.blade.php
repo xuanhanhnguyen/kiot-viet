@@ -6,16 +6,29 @@
     <h5 class="m-0">Thêm hóa đơn:</h5>
 @stop
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <div class="callout-top callout-top-danger">
         <table align="center" class="text-right">
             <tbody id="data1">
             <tr>
                 <td>Khách hàng:</td>
+                <td style="width: 240px;text-align: left">
+                    <div class="form-group m-0 khach_hang">
+                        <select value="" class="form-control select2" name="id_kh" style="width: 100%;">
+                            <option value="">-----------------Chọn---------------</option>
+                            @foreach($khach_hang as $val)
+                                <option value="{{$val->id}}"
+                                        title="{{$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->dien_thoai}}">
+                                    {{$val->ten_kh}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input class="form-control khach_hang" name="text_kh" type="text"
+                           placeholder="họ tên, địa chỉ, điện thoại"
+                           style="display: none" value="">
+                </td>
                 <td>
-                    <select>
-                        <option value="1">Nguyễn Văn A</option>
-                    </select>
-                    <input type="text" style="display: none">
+                    <summary onclick="controlKH()" class="fas fa-sync-alt"></summary>
                 </td>
             </tr>
             <tr>
@@ -37,7 +50,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-danger">Thanh toán</button>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="pay()">Thanh toán</button>
                 </td>
             </tr>
             </tbody>
@@ -54,7 +67,7 @@
                     <th class="bg-danger">Đơn giá</th>
                     <th class="bg-danger">
                         <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal">
-                            Thêm
+                            +Thêm
                         </button>
                     </th>
                 </tr>
@@ -100,14 +113,14 @@
                                 <td>
                                     <button type="button" id="sp-{{$val->id}}" class="btn btn-sm btn-success"
                                             onclick="book({{$val}})">
-                                        Thêm
+                                        +Thêm
                                     </button>
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
-                    <script>
+                    <script type="text/javascript">
                         var san_pham = [];
                         var sale = 0;
                         var manny = 0;
@@ -157,14 +170,56 @@
                             printf();
                         }
 
+                        function pay() {
+                            if ($('select[name="id_kh"]').val() === "" && $('input[name="text_kh"]').val() === "") {
+                                alert("Vui lòng nhập khách hàng?");
+                            } else if (san_pham.length === 0) {
+                                alert("Vui lòng chọn sản phẩm?")
+                            }
+                            else {
+                                $.ajaxSetup({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    }
+                                });
+                                $.post('', {
+                                    manny: manny,
+                                    san_pham: san_pham,
+                                    id_kh: $('select[name="id_kh"]').val(),
+                                    text_kh: $('input[name="text_kh"]').val(),
+                                }, function (data) {
+                                    if (data == 1) {
+                                        alert("Giao dịch thành công!");
+                                        location.href = "/admin/giao_dich";
+                                    } else {
+                                        alert("Giao dịch không thành công!")
+                                    }
+                                });
+                            }
+                        }
+
                         function sl(id) {
                             san_pham = san_pham.map(v => (v.id === id ? {
-                                ...v,
-                                sl_mua: $('#sl-' + id).val() > 0 ? $('#sl-' + id).val() : 1
+                                ...v, sl_mua: controlSl(v.so_luong, $('#sl-' + id).val())
                             } : v));
                             manny = 0;
                             sale = 0;
                             printf();
+                        }
+
+                        function controlSl(oldNum, newNum) {
+                            if (newNum < 0)
+                                return 1;
+                            if (newNum > oldNum) {
+                                alert("Kho không đủ số lượng!");
+                                return oldNum;
+                            }
+                            return newNum;
+                        }
+
+                        function controlKH() {
+                            $('.khach_hang').toggle();
+                            $('input[name="text_kh"]').val(null);
                         }
 
                         function del(id) {

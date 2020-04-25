@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\cthd;
 use App\hoa_don;
+use App\khach_hang;
 use App\san_pham;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -31,7 +32,8 @@ class GiaoDichController extends Controller
     {
         //
         $san_pham = san_pham::where('so_luong', '>', 0)->get();
-        return view('admin.giao_dich.create',compact('san_pham'));
+        $khach_hang = khach_hang::where('trang_thai', 0)->where('loai_kh', 1)->get();
+        return view('admin.giao_dich.create', compact('san_pham', 'khach_hang'));
     }
 
     /**
@@ -42,7 +44,28 @@ class GiaoDichController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            if (isset($request->text_kh)) {
+                $dataKH = explode(",", $request->text_kh);
+                $kh = khach_hang::updateOrCreate(['ten_kh' => trim($dataKH[0], " "), 'dia_chi' => trim($dataKH[1], " "), 'dien_thoai' => trim($dataKH[2], " ")]);
+                $hd = hoa_don::create(['khach_hang_id' => $kh->id, 'tong_tien' => $request->manny, 'create_by' => 1]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hoa_don_id' => $hd->id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
+            } else {
+                $hd = hoa_don::create(['khach_hang_id' => $request->id_kh, 'tong_tien' => $request->manny, 'create_by' => 1]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hoa_don_id' => $hd->id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
+            }
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
     /**
@@ -89,6 +112,11 @@ class GiaoDichController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hd = hoa_don::find($id);
+        if ($hd) {
+            $hd->cthd()->delete();
+            $hd->delete();
+            return redirect()->back()->with(['message' => "Xóa hóa đơn thành công!"]);
+        }
     }
 }

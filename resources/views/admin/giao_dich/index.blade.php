@@ -6,6 +6,27 @@
     <h5 class="m-0">Danh sách hóa đơn:</h5>
 @stop
 @section('content')
+
+    @if(count($errors) > 0)
+        <div class="alert alert-danger">
+            @foreach($errors->all() as $err)
+                {{$err}}<br>
+            @endforeach
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if (session('message'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i> Thông báo</h4>
+            {{ session('message') }}
+        </div>
+    @endif
     <div class="callout-top callout-top-danger">
         <table id="data-table" align="center" width="100%"
                class="table table-hover table-striped table-bordered border text-center display">
@@ -16,18 +37,29 @@
                 <th>Thời gian</th>
                 <th>Khách hàng</th>
                 <th>Tổng tiền</th>
+                <th>
+                    <button class="btn btn-success btn-sm" onclick="location.href = '/admin/giao_dich/them'">+Thêm
+                    </button>
+                </th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                @foreach($hoa_don as $val)
+            @foreach($hoa_don as $val)
+                <tr>
                     <td onclick="detailt({{$val->id}})">HD00{{$val->id}}</td>
                     <td onclick="detailt({{$val->id}})">{{($val->user)->name}}</td>
                     <td onclick="detailt({{$val->id}})">{{$val->created_at}}</td>
                     <td onclick="detailt({{$val->id}})">{{($val->khach_hang)->ten_kh}}</td>
                     <td onclick="detailt({{$val->id}})">{{_manny($val->tong_tien)}} vnđ</td>
-                @endforeach
-            </tr>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">Cập nhật</button>
+                        <button class="btn btn-sm btn-outline-danger">
+                            <a class="text-dark" href="{{route('giao_dich.delete', $val->id)}}"
+                               onclick="return confirm('Bạn muốn xóa hóa đơn này?');">Xóa</a>
+                        </button>
+                    </td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
         <style>
@@ -36,6 +68,15 @@
             }
         </style>
         <script>
+            function dateTime(str) {
+                if (str === null)
+                    return "-";
+                else {
+                    str = str.substring(0, 10) + " " + str.substring(11, 19);
+                    return str;
+                }
+            }
+
             function _manny(str) {
                 str = str.split('').reverse().join('');
                 var tg = "";
@@ -68,7 +109,7 @@
                             "<td>" + data.cthd[i].sl_mua + "</td>\n" +
                             "<td>" + (data.cthd[i].san_pham).sale + "%</td>\n" +
                             "<td>" + _manny("" + manny) + " vnđ</td>\n" +
-                            "<td>" + data.cthd[i].created_at + "</td>\n" +
+                            "<td>" + dateTime(data.cthd[i].created_at) + "</td>\n" +
                             "</tr>";
                     }
                     $('#data').html(str);
@@ -115,7 +156,7 @@
                     </button>
                 </div>
                 <div class="modal-body table-responsive">
-                    <table id="product" class="table table-hover table-striped table-bordered text-center">
+                    <table class="table table-hover table-striped table-bordered text-center">
                         <thead>
                         <tr class="bg-danger">
                             <th>STT</th>

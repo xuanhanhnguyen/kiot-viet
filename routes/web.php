@@ -64,7 +64,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'giao_dich'], function () {
         Route::get('/', 'Admin\GiaoDichController@index')->name('giao_dich.index');
         Route::get('/them', 'Admin\GiaoDichController@create')->name('giao_dich.create');
-        Route::post('/', 'Admin\GiaoDichController@store')->name('giao_dich.store');
+        Route::post('/them', 'Admin\GiaoDichController@store')->name('giao_dich.store');
         Route::get('/{id}', 'Admin\GiaoDichController@show')->name('giao_dich.show');
+        Route::get('/{id}/delete', 'Admin\GiaoDichController@destroy')->name('giao_dich.delete');
     });
 });

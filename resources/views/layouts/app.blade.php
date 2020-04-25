@@ -10,6 +10,7 @@
 @section('js')    
     <script>
         $(document).ready(function () {
+            $('.select2').select2();
             $('#data-table').DataTable(
                 {
                     "oLanguage": {
