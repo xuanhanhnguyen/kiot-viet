@@ -19,7 +19,7 @@ class CreateChamCongsTable extends Migration
             $table->string('ngay_cong');
             $table->integer('thang');
             $table->integer('nam');
-            $table->string('ghi_chu');
+            $table->string('ghi_chu')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

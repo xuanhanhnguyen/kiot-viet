@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Đăng nhập||Quản lý xe máy',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b style="font-weight: bold">Quản lý xe máy</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -277,12 +277,12 @@ return [
             'submenu' => [
                 [
                     'text' => 'Danh sách nhân viên',
-                    'url' => 'admin/',
+                    'url' => 'admin/nhan_vien',
                     'icon_color' => 'red'
                 ],
                 [
                     'text' => 'Chấm công',
-                    'url' => 'admin/',
+                    'url' => 'admin/cham_cong',
                     'icon_color' => 'red'
                 ]
             ]

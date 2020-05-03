@@ -3,7 +3,7 @@
 @section('main')
 @section('title', 'Quản lý giao dịch')
 @section('content_header')
-    <h5 class="m-0">Thêm hóa đơn:</h5>
+    <h5 class="m-0">Cập nhật hóa đơn:</h5>
 @stop
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
@@ -11,15 +11,23 @@
         <table align="center" class="text-right">
             <tbody id="data1">
             <tr>
+                <td>Mã hóa đơn:</td>
+                <td>HD00{{$hoa_don->id}}</td>
+            </tr>
+            <tr>
                 <td>Khách hàng:</td>
                 <td style="width: 240px;text-align: left">
                     <div class="form-group m-0 khach_hang">
-                        <select value="" class="form-control select2" name="id_kh" style="width: 100%;">
-                            <option value="">-----------------Chọn---------------</option>
+                        <select value="{{$hoa_don->khach_hang_id}}" class="form-control select2" name="id_kh"
+                                style="width: 100%;">
                             @foreach($khach_hang as $val)
-                                <option value="{{$val->id}}"
-                                        title="{{$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->dien_thoai}}">
-                                    {{$val->ten_kh}}</option>
+                                @if($val->id === $hoa_don->khach_hang_id)
+                                    <option selected value="{{$val->id}}">{{$val->ten_kh}}</option>
+                                @else
+                                    <option value="{{$val->id}}"
+                                            title="{{$val->ten_kh.",".$val->dia_chi.",".$val->email.",".$val->dien_thoai}}">
+                                        {{$val->ten_kh}}</option>
+                                @endif
                             @endforeach
                         </select>
                     </div>
@@ -45,12 +53,12 @@
             </tr>
             <tr class="border-danger border-top">
                 <td>Thành tiền:</td>
-                <td id="thanh_tien">0 vnđ</td>
+                <td id="thanh_tien">{{_manny($hoa_don->tong_tien)}} vnđ</td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-danger" onclick="pay()">Thanh toán</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="pay()">Cập nhật</button>
                 </td>
             </tr>
             </tbody>
@@ -72,15 +80,12 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody id="san_pham">
+                <tbody id="san_pham" detail="{{$hoa_don->id}}">
                 {{--jQuery--}}
                 </tbody>
             </table>
         </div>
     </div>
-    <script>
-        //
-    </script>
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
          aria-hidden="true">
@@ -164,10 +169,12 @@
 
                         function book(obj) {
                             $('#sp-' + obj.id).hide();
-                            san_pham.push({...obj, sl_mua: 1});
-                            manny = 0;
-                            sale = 0;
-                            printf();
+                            if (san_pham.findIndex(v => (v.id === obj.id)) === -1) {
+                                san_pham.push({...obj, sl_mua: 1});
+                                manny = 0;
+                                sale = 0;
+                                printf();
+                            }
                         }
 
                         function pay() {
@@ -235,4 +242,22 @@
         </div>
     </div>
 @stop
+@endsection
+@section('jquery')
+    <script>
+        //
+        $(document).ready(function () {
+            var id = $('#san_pham').attr('detail');
+            $.get('/admin/giao_dich/' + id, function (data) {
+                for (var i = 0; i < data.cthd.length; i++) {
+                    san_pham.push({
+                        ...data.cthd[i].san_pham,
+                        sl_mua: data.cthd[i].sl_mua,
+                        so_luong: data.cthd[i].sl_mua + data.cthd[i].san_pham.so_luong
+                    });
+                }
+                printf();
+            })
+        });
+    </script>
 @endsection

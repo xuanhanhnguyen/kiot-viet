@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/admin.css">
 @stop
 
-@section('js')    
+@section('js')
     <script>
         $(document).ready(function () {
             $('.select2').select2();
@@ -21,7 +21,7 @@
                         "sInfoEmpty": "0 mục",
                         "sInfoFiltered": "",
                         "sInfoPostFix": "",
-                        "sSearch": "Tìm:",
+                        "sSearch": "Tìm kiếm:",
                         "sUrl": "",
                         "oPaginate": {
                             "sPrevious": "<",
@@ -71,5 +71,6 @@
         });
     </script>
     <!-- page script -->
-    <script type="text/javascript" language="javascript" src="/ckeditor/ckeditor.js"></script>    
+    <script type="text/javascript" language="javascript" src="/ckeditor/ckeditor.js"></script>
+    @yield('jquery')
 @stop

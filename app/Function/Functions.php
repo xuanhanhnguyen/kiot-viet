@@ -14,7 +14,7 @@ if (!function_exists('_manny')) {
         for ($i = 0; $i < strlen($str); $i++) {
             $tg .= $str[$i];
             if (($i + 1) % 3 === 0 && $i !== strlen($str) - 1) {
-                $tg .= ',';
+                $tg .= '.';
             }
         }
         return strrev($tg);

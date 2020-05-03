@@ -20,10 +20,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('dien_thoai');
-            $table->dateTime('ngay_sinh');
+            $table->date('ngay_sinh');
             $table->string('dia_chi');
             $table->integer('chuc_vu');
-            $table->boolean('trang_thai');
+            $table->boolean('trang_thai')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

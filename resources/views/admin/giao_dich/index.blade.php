@@ -52,7 +52,9 @@
                     <td onclick="detailt({{$val->id}})">{{($val->khach_hang)->ten_kh}}</td>
                     <td onclick="detailt({{$val->id}})">{{_manny($val->tong_tien)}} vnđ</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Cập nhật</button>
+                        <button class="btn btn-sm btn-outline-primary"
+                                onclick="location.href = 'giao_dich/{{$val->id}}/edit'">Cập nhật
+                        </button>
                         <button class="btn btn-sm btn-outline-danger">
                             <a class="text-dark" href="{{route('giao_dich.delete', $val->id)}}"
                                onclick="return confirm('Bạn muốn xóa hóa đơn này?');">Xóa</a>
@@ -84,7 +86,7 @@
                 for (i; i < str.length; i++) {
                     tg += str[i];
                     if (i !== str.length - 1 && (i + 1) % 3 === 0) {
-                        tg += ',';
+                        tg += '.';
                     }
                 }
                 return tg.split('').reverse().join('');
@@ -101,14 +103,13 @@
                         sl += data.cthd[i].sl_mua;
                         sum += (data.cthd[i].san_pham).gia * data.cthd[i].sl_mua;
                         manny += ((data.cthd[i].san_pham).gia * (100 - (data.cthd[i].san_pham).sale) / 100) * data.cthd[i].sl_mua;
-                        console.log(manny);
 
                         str += "<tr>\n" +
                             "<td>" + (i + 1) + "</td>\n" +
                             "<td>" + (data.cthd[i].san_pham).ten_sp + "</td>\n" +
                             "<td>" + data.cthd[i].sl_mua + "</td>\n" +
                             "<td>" + (data.cthd[i].san_pham).sale + "%</td>\n" +
-                            "<td>" + _manny("" + manny) + " vnđ</td>\n" +
+                            "<td>" + _manny("" + (((data.cthd[i].san_pham).gia * (100 - (data.cthd[i].san_pham).sale) / 100) * data.cthd[i].sl_mua)) + " vnđ</td>\n" +
                             "<td>" + dateTime(data.cthd[i].created_at) + "</td>\n" +
                             "</tr>";
                     }

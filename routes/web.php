@@ -31,7 +31,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('delete/{id}', 'ProductController@delete')->name('admin.product.delete');
     });
 
-     /**
+    /**
      * Nhập kho
      */
     Route::prefix('nhapkho')->group(function () {
@@ -77,6 +77,32 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/them', 'Admin\GiaoDichController@create')->name('giao_dich.create');
         Route::post('/them', 'Admin\GiaoDichController@store')->name('giao_dich.store');
         Route::get('/{id}', 'Admin\GiaoDichController@show')->name('giao_dich.show');
+        Route::get('/{id}/edit', 'Admin\GiaoDichController@edit')->name('giao_dich.edit');
+        Route::post('/{id}/edit', 'Admin\GiaoDichController@update')->name('giao_dich.update');
         Route::get('/{id}/delete', 'Admin\GiaoDichController@destroy')->name('giao_dich.delete');
+    });
+
+    /**
+     * Phần nhân viên
+     */
+
+    Route::group(['prefix' => 'nhan_vien'], function () {
+        Route::get('/', 'Admin\UserController@index')->name('nhan_vien.index');
+        Route::get('/insert', 'Admin\UserController@create')->name('nhan_vien.create');
+        Route::post('/insert', 'Admin\UserController@store')->name('nhan_vien.store');
+        Route::get('/{id}/edit', 'Admin\UserController@show')->name('nhan_vien.show');
+        Route::post('/{id}/edit', 'Admin\UserController@update')->name('nhan_vien.update');
+        Route::get('/{id}/delete', 'Admin\UserController@destroy')->name('nhan_vien.delete');
+    });
+    /**
+     * Phần chấm công
+     */
+
+    Route::group(['prefix' => 'cham_cong'], function () {
+        Route::get('/', 'Admin\ChamCongController@index')->name('nhan_vien.index');
+        Route::get('/{thang}/{nam}', 'Admin\ChamCongController@show')->name('nhan_vien.show');
+        Route::get('/create', 'Admin\ChamCongController@create')->name('nhan_vien.create');
+        Route::post('/create', 'Admin\ChamCongController@store')->name('nhan_vien.store');
+
     });
 });

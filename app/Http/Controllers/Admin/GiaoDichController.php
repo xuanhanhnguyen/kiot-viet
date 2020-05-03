@@ -47,7 +47,7 @@ class GiaoDichController extends Controller
         try {
             if (isset($request->text_kh)) {
                 $dataKH = explode(",", $request->text_kh);
-                $kh = khach_hang::updateOrCreate(['ten_kh' => trim($dataKH[0], " "), 'dia_chi' => trim($dataKH[1], " "), 'dien_thoai' => trim($dataKH[2], " ")]);
+                $kh = khach_hang::updateOrCreate(['ten_kh' => trim($dataKH[0], " "), 'dien_thoai' => trim($dataKH[2], " ")], ['ten_kh' => trim($dataKH[0], " "), 'dia_chi' => trim($dataKH[1], " "), 'dien_thoai' => trim($dataKH[2], " ")]);
                 $hd = hoa_don::create(['khach_hang_id' => $kh->id, 'tong_tien' => $request->manny, 'create_by' => 1]);
                 foreach ($request->san_pham as $val) {
                     cthd::create(['hoa_don_id' => $hd->id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
@@ -89,7 +89,10 @@ class GiaoDichController extends Controller
      */
     public function edit($id)
     {
-        //
+        $san_pham = san_pham::where('so_luong', '>', 0)->get();
+        $khach_hang = khach_hang::where('trang_thai', 0)->where('loai_kh', 1)->get();
+        $hoa_don = hoa_don::findOrFail($id);
+        return view('admin.giao_dich.edit', compact('hoa_don', 'khach_hang', 'san_pham'));
     }
 
     /**
@@ -101,7 +104,36 @@ class GiaoDichController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $cthd = cthd::where('hoa_don_id', $id);
+            foreach ($cthd->get() as $val) {
+                $san_pham = san_pham::findOrFail($val->san_pham_id);
+                $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->sl_mua)]);
+            }
+            $cthd->delete();
+
+            if (isset($request->text_kh)) {
+                $dataKH = explode(",", $request->text_kh);
+                $kh = khach_hang::updateOrCreate(['ten_kh' => trim($dataKH[0], " "), 'dien_thoai' => trim($dataKH[2], " ")], ['ten_kh' => trim($dataKH[0], " "), 'dia_chi' => trim($dataKH[1], " "), 'dien_thoai' => trim($dataKH[2], " ")]);
+                hoa_don::findOrFail($id)->update(['khach_hang_id' => $kh->id, 'tong_tien' => $request->manny]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hoa_don_id' => $id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
+            } else {
+                hoa_don::findOrFail($id)->update(['khach_hang_id' => $request->id_kh, 'tong_tien' => $request->manny]);
+                foreach ($request->san_pham as $val) {
+                    cthd::create(['hoa_don_id' => $id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
+                    $sp = san_pham::find($val['id']);
+                    $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
+                }
+            }
+
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
     /**
@@ -114,9 +146,15 @@ class GiaoDichController extends Controller
     {
         $hd = hoa_don::find($id);
         if ($hd) {
-            $hd->cthd()->delete();
+            $cthd = cthd::where('hoa_don_id', $id);
+            foreach ($cthd->get() as $val) {
+                $san_pham = san_pham::findOrFail($val->san_pham_id);
+                $san_pham->update(['so_luong' => ($san_pham->so_luong + $val->sl_mua)]);
+            }
+            $cthd->delete();
             $hd->delete();
             return redirect()->back()->with(['message' => "Xóa hóa đơn thành công!"]);
-        }
+        } else
+            return redirect()->back()->with(['error' => "Xóa hóa đơn thành công!"]);
     }
 }
