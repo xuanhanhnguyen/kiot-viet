@@ -108,7 +108,7 @@
                             <tr>
                                 <td>{{$val->ten_sp}}</td>
                                 <td>{{$val->so_luong}}</td>
-                                <td>{{$val->sale}}</td>
+                                <td>{{$val->sale}}%</td>
                                 <td>{{_manny($val->gia)}} vnđ</td>
                                 <td>
                                     <button type="button" id="sp-{{$val->id}}" class="btn btn-sm btn-success"
