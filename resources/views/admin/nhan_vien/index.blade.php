@@ -53,7 +53,7 @@
                         Điện thoại: {{$val->dien_thoai}}<br/>
                         Ngày sinh: {{$val->ngay_sinh}}<br/>
                         Địa chỉ: {{$val->dia_chi}}<br/>
-                        Chức vụ: {{$val->chuc_vu === 1 ? 'Admin': $val->chuc_vu ===  2 ? 'Kế toán': "Nhân viên"}}<br/>
+                        Chức vụ: {{($val->chuc_vu === 1 ? 'Admin': $val->chuc_vu) ===  2 ? 'Kế toán': "Nhân viên"}}<br/>
                     </td>
                     <td>
                         <form action="{{route('nhan_vien.update', $val->id)}}" method="POST">
