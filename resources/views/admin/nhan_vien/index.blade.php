@@ -61,10 +61,11 @@
                             <input class="d-none" type="number" value="{{$val->trang_thai === 1 ? 0:1}}"
                                    name="trang_thai">
                             @if($val->trang_thai === 1)
-                                <button class="btn btn-sm btn-outline-success" type="submit">Hoạt động
+                                <button class="btn btn-sm btn-outline-success"
+                                        @if($val->chuc_vu == 1) disabled @endif type="submit">Hoạt động
                                 </button>
                             @else
-                                <button class="btn btn-sm btn-outline-danger" type="submit">Ẩn
+                                <button class="btn btn-sm btn-outline-danger" @if($val->chuc_vu == 1) disabled @endif type="submit">Ẩn
                                 </button>
                             @endif
                         </form>

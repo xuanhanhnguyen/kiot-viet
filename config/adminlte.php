@@ -223,7 +223,7 @@ return [
         ['header' => 'Thiết lập'],
         [
             'text' => 'Tài khoản',
-            'url' => 'admin/',
+            'url' => 'admin/nhan_vien/password',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'Quản lý'],

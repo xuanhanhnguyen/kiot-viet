@@ -93,6 +93,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{id}/edit', 'Admin\UserController@show')->name('nhan_vien.show');
         Route::post('/{id}/edit', 'Admin\UserController@update')->name('nhan_vien.update');
         Route::get('/{id}/delete', 'Admin\UserController@destroy')->name('nhan_vien.delete');
+
+        Route::get('/password', 'Admin\UserController@edit')->name('nhan_vien.password');
     });
     /**
      * Phần chấm công
@@ -103,6 +105,5 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{thang}/{nam}', 'Admin\ChamCongController@show')->name('nhan_vien.show');
         Route::get('/create', 'Admin\ChamCongController@create')->name('nhan_vien.create');
         Route::post('/create', 'Admin\ChamCongController@store')->name('nhan_vien.store');
-
     });
 });
