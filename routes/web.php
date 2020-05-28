@@ -109,4 +109,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/create', 'Admin\ChamCongController@create')->name('nhan_vien.create');
         Route::post('/create', 'Admin\ChamCongController@store')->name('nhan_vien.store');
     });
+
+    Route::resource('cua_hang', 'Admin\StoreController');
+    Route::get('cua_hang/delete/{id}', 'Admin\StoreController@destroy');
 });

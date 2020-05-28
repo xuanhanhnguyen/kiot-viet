@@ -228,6 +228,11 @@ return [
         ],
         ['header' => 'Quản lý'],
         [
+            'text' => 'Quản lý cửa hàng',
+            'url' => 'admin/cua_hang',
+            'icon' => 'fab fa-product-hunt',
+        ],
+        [
             'text' => 'Giao dịch',
             'icon' => 'fa fa-shopping-cart',
             'submenu' => [
