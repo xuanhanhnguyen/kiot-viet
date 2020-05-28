@@ -9,7 +9,7 @@ return [
     'remember_me'                 => 'Nhớ mật khẩu',
     'register'                    => 'Đăng ký',
     'register_a_new_membership'   => 'Đăng ký',
-    'i_forgot_my_password'        => 'Quên mật khẩu?',
+    'i_forgot_my_password'        => ' ',
     'i_already_have_a_membership' => 'Tôi đã là thành viên',
     'sign_in'                     => 'Đăng nhập',
     'log_out'                     => 'Đăng xuất',

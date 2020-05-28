@@ -32,20 +32,29 @@
                 <input type="email" name="email" value="{{$user->email}}" class="form-control" required>
             </div>
             <div class="row">
-                <div class="form-group col-md-4 mt-2">
+                <div class="form-group col-md-3 mt-2">
                     <label for="cat">Điện thoại:</label>
                     <input type="text" name="dien_thoai" value="{{$user->dien_thoai}}" class="form-control" required>
                 </div>
-                <div class="form-group col-md-4 mt-2">
+                <div class="form-group col-md-3 mt-2">
                     <label for="cat">Ngày sinh:</label>
                     <input type="date" name="ngay_sinh" value="{{$user->ngay_sinh}}" class="form-control" required>
+                    <input type="text" name="trang_thai" value="{{$user->trang_thai}}" class="form-control d-none" required>
                 </div>
-                <div class="form-group col-md-4 mt-2">
+                <div class="form-group col-md-3 mt-2">
                     <label for="cat">Chức vụ:</label>
                     <select class="form-control" name="chuc_vu" required>
-                        <option @if($user->chuc_vu === 1 ) selected @endif value="1">Admin</option>
                         <option @if($user->chuc_vu === 2 ) selected @endif value="2">Kế toán</option>
                         <option @if($user->chuc_vu === 3 ) selected @endif value="3">Nhân viên</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3 mt-2">
+                    <label for="cat">Chi nhánh:</label>
+                    <select class="form-control" name="cua_hang_id" required>
+                        @foreach($store as $val)
+                            <option @if($user->cua_hang_id === $val->id )selected
+                                    @endif value="{{$val->id}}">{{$val->ten}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>

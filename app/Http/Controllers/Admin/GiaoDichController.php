@@ -8,6 +8,7 @@ use App\khach_hang;
 use App\san_pham;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class GiaoDichController extends Controller
 {
@@ -48,14 +49,14 @@ class GiaoDichController extends Controller
             if (isset($request->text_kh)) {
                 $dataKH = explode(",", $request->text_kh);
                 $kh = khach_hang::updateOrCreate(['ten_kh' => trim($dataKH[0], " "), 'dien_thoai' => trim($dataKH[2], " ")], ['ten_kh' => trim($dataKH[0], " "), 'dia_chi' => trim($dataKH[1], " "), 'dien_thoai' => trim($dataKH[2], " ")]);
-                $hd = hoa_don::create(['khach_hang_id' => $kh->id, 'tong_tien' => $request->manny, 'create_by' => 1]);
+                $hd = hoa_don::create(['khach_hang_id' => $kh->id, 'tong_tien' => $request->manny, 'create_by' => Auth::user()->id]);
                 foreach ($request->san_pham as $val) {
                     cthd::create(['hoa_don_id' => $hd->id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
                     $sp = san_pham::find($val['id']);
                     $sp->update(['so_luong' => ($sp->so_luong - $val['sl_mua'])]);
                 }
             } else {
-                $hd = hoa_don::create(['khach_hang_id' => $request->id_kh, 'tong_tien' => $request->manny, 'create_by' => 1]);
+                $hd = hoa_don::create(['khach_hang_id' => $request->id_kh, 'tong_tien' => $request->manny, 'create_by' => Auth::user()->id]);
                 foreach ($request->san_pham as $val) {
                     cthd::create(['hoa_don_id' => $hd->id, 'san_pham_id' => $val['id'], 'sl_mua' => $val['sl_mua']]);
                     $sp = san_pham::find($val['id']);

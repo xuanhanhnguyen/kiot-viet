@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -18,7 +19,8 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('admin.nhan_vien.index', compact('user'));
+        $store = DB::table('cua_hang')->get();
+        return view('admin.nhan_vien.index', compact('user','store'));
 
     }
 
@@ -30,7 +32,8 @@ class UserController extends Controller
     public function create()
     {
         //
-        return view('admin.nhan_vien.create');
+        $store = DB::table('cua_hang')->get();
+        return view('admin.nhan_vien.create', compact('store'));
     }
 
     /**
@@ -65,7 +68,8 @@ class UserController extends Controller
     {
         //
         $user = User::findOrFail($id);
-        return view('admin.nhan_vien.edit', compact('user'));
+        $store = DB::table('cua_hang')->get();
+        return view('admin.nhan_vien.edit', compact('user','store'));
     }
 
     /**
@@ -91,19 +95,18 @@ class UserController extends Controller
     {
         //
         try {
-            if(isset($request->password_config)){
-                if($request->password_config == $request->password){
+            if (isset($request->password_config)) {
+                if ($request->password_config == $request->password) {
                     $data = collect($request->all())->merge([
                         'password' => Hash::make($request->password)
                     ])->toArray();
                     unset($data['password_config']);
                     User::findOrFail($id)->update($data);
                     return redirect('/admin/nhan_vien/password')->with("message", "Cập nhật thành công!");
-                }else{
+                } else {
                     return redirect('/admin/nhan_vien/password')->with(["error" => "Mật khẩu không trùng khớp!"]);
                 }
-            }
-            elseif (isset($request->trang_thai) && $request->trang_thai == 1) {
+            } elseif (isset($request->trang_thai) && $request->trang_thai == 1) {
                 $data = collect($request->all())->merge([
                     'password' => Hash::make('123456')
                 ])->toArray();

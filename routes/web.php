@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@control');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/', 'HomeController@control');
+
+    Route::get('/{id}/home', 'HomeController@index');
+    Route::get('/store', 'HomeController@store');
     /**
      * Sản phẩm
      */

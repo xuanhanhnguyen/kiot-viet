@@ -53,7 +53,12 @@
                         Điện thoại: {{$val->dien_thoai}}<br/>
                         Ngày sinh: {{$val->ngay_sinh}}<br/>
                         Địa chỉ: {{$val->dia_chi}}<br/>
-                        Chức vụ: {{($val->chuc_vu === 1 ? 'Admin': $val->chuc_vu) ===  2 ? 'Kế toán': "Nhân viên"}}<br/>
+                        Chức vụ: {{$val->chuc_vu === 1 ? 'Quản lý': ($val->chuc_vu ===  2 ? 'Kế toán': "Nhân viên")}}<br/>
+                        @foreach($store as $item)
+                            @if($item->id == $val->cua_hang_id)
+                                Chi nhánh: {{$item->ten}}
+                            @endif
+                        @endforeach
                     </td>
                     <td>
                         <form action="{{route('nhan_vien.update', $val->id)}}" method="POST">
@@ -65,18 +70,19 @@
                                         @if($val->chuc_vu == 1) disabled @endif type="submit">Hoạt động
                                 </button>
                             @else
-                                <button class="btn btn-sm btn-outline-danger" @if($val->chuc_vu == 1) disabled @endif type="submit">Ẩn
+                                <button class="btn btn-sm btn-outline-danger" @if($val->chuc_vu == 1) disabled
+                                        @endif type="submit">Ẩn
                                 </button>
                             @endif
                         </form>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary"
-                                onclick="location.href = 'nhan_vien/{{$val->id}}/edit'">
+                        <button class="btn btn-sm btn-outline-primary" @if($val->chuc_vu == 1) disabled @endif
+                        onclick="location.href = 'nhan_vien/{{$val->id}}/edit'">
                             Cập nhật
                         </button>
-                        <button class="btn btn-sm btn-outline-danger"
-                                onclick="confirm('Đồng ý xóa?') ? location.href = 'nhan_vien/{{$val->id}}/delete': '';">
+                        <button class="btn btn-sm btn-outline-danger" @if($val->chuc_vu == 1) disabled @endif
+                        onclick="confirm('Đồng ý xóa?') ? location.href = 'nhan_vien/{{$val->id}}/delete': '';">
                             Xóa
                         </button>
                     </td>
